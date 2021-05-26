@@ -2,10 +2,7 @@ package org.example;
 
 import org.example.bean.Quoter;
 import org.example.bean.QuoterImpl;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -18,7 +15,6 @@ public class App {
 
     public static void main(String[] args) {
 
-        System.out.println("Before context load in main");
         ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
 
 //        while (true){
@@ -31,8 +27,7 @@ public class App {
 //            }
 //        }
 
-      System.out.println("before bean creation in Main");
-      Quoter obj = context.getBean(Quoter.class);
+        Quoter obj = context.getBean(Quoter.class);
         //obj.sayQuote();
 
 //        int i = 1;

@@ -18,7 +18,6 @@ public class PostProxyInvokerListener implements ApplicationListener<ContextRefr
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        System.out.println("=> Entered PostProxyInvokerListener => onApplicationEvent");
         ApplicationContext context = event.getApplicationContext();
         String[] names = context.getBeanDefinitionNames();
         for(String name : names){
@@ -29,7 +28,6 @@ public class PostProxyInvokerListener implements ApplicationListener<ContextRefr
                 Method[] methods = originalClass.getMethods();
                 for (Method method : methods) {
                     if(method.isAnnotationPresent(PostProxy.class)){
-                        System.out.println("before bean creation in Application Listener");
                         Object bean = context.getBean(name);
                         Method currentMethod = bean.getClass().getMethod(method.getName());
                         currentMethod.invoke(bean);
@@ -39,7 +37,5 @@ public class PostProxyInvokerListener implements ApplicationListener<ContextRefr
                 e.printStackTrace();
             }
         }
-        System.out.println("=> Exit PostProxyInvokerListener => onApplicationEvent");
     }
-
 }

@@ -12,7 +12,6 @@ public class InjectRandomIntBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        System.out.println("=> Entered InjectRandomIntPostProcessor => postProcessBeforeInitialization: " + beanName);
         Field[] fields = bean.getClass().getDeclaredFields();
         for(Field field : fields){
             InjectRandomInt annotation = field.getAnnotation(InjectRandomInt.class);
@@ -29,7 +28,6 @@ public class InjectRandomIntBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        System.out.println("=> Entered InjectRandomIntPostProcessor => postProcessAfterInitialization: " + beanName);
         return BeanPostProcessor.super.postProcessAfterInitialization(bean, beanName);
     }
 }

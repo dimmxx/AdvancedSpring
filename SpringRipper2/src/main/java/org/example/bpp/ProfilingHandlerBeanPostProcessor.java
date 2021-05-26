@@ -35,9 +35,8 @@ public class ProfilingHandlerBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        System.out.println("=> Entered ProfilingHandlerBeanPostProcessor => postProcessBeforeInitialization: " + beanName);
         Class<?> clazz = bean.getClass();
-        if (clazz.isAnnotationPresent(Profiling.class)) {
+        if(clazz.isAnnotationPresent(Profiling.class)){
             beanMap.put(beanName, bean.getClass());
         }
         return bean;
@@ -45,27 +44,26 @@ public class ProfilingHandlerBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        System.out.println("=> Entered ProfilingHandlerBeanPostProcessor => postProcessAfterInitialization: " + beanName);
-        Class<?> beanClass = beanMap.get(beanName);
-        if (beanClass != null) {
-            return Proxy.newProxyInstance(bean.getClass().getClassLoader(), bean.getClass().getInterfaces(), new InvocationHandler() {
-                @Override
-                public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                    if (profilingController.enabled) {
-                        System.out.println("\n:::Profiling...");
-                        long before = System.nanoTime();
-                        Object retVal = method.invoke(bean, args);
-                        long after = System.nanoTime();
-                        System.out.println(":::Time elapsed: " + (after - before) / 1000 + " ms");
-                        System.out.println(":::Finished profiling...");
-                        return retVal;
-                    } else {
-                        return method.invoke(bean, args);
-                    }
-                }
-            });
-        } else {
-            return bean;
-        }
+       Class<?> beanClass = beanMap.get(beanName);
+       if(beanClass != null){
+           return Proxy.newProxyInstance(bean.getClass().getClassLoader(), bean.getClass().getInterfaces(), new InvocationHandler() {
+               @Override
+               public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                   if(profilingController.enabled){
+                       System.out.println("\n:::Profiling...");
+                       long before = System.nanoTime();
+                       Object retVal = method.invoke(bean, args);
+                       long after = System.nanoTime();
+                       System.out.println(":::Time elapsed: " + (after - before)/1000 + " ms");
+                       System.out.println(":::Finished profiling...");
+                       return retVal;
+                   } else {
+                       return method.invoke(bean, args);
+                   }
+               }
+           });
+       }else{
+           return bean;
+       }
     }
 }
