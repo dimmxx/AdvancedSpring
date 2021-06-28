@@ -22,4 +22,5 @@
         <property name = "message" value = "I'll be back"/>
     </bean>
 
+    <bean id = "dataImpl" class = "org.example.bean.DataImpl" scope="prototype"/>
 </beans>

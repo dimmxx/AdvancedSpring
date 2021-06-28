@@ -7,10 +7,14 @@
    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 <!--    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>-->
-    <!--    name-space can be used instead-->
+<!--    name-space can be used instead-->
     <context:annotation-config/>
 <!--    or this name-space can be used instead to load annotation Post Processors:-->
 <!--    <context:component-scan base-package="org.example"/>-->
+
+    <bean id = "quoterImpl" class = "org.example.bean.QuoterImpl" scope="prototype">
+        <property name = "message" value = "I'll be back"/>
+    </bean>
 
     <bean id="postProxyInvokerListener" class="org.example.bpp.PostProxyInvokerListener"/>
 
@@ -18,8 +22,7 @@
 
     <bean id="randomIntBeanPostProcessor" class="org.example.bpp.InjectRandomIntBeanPostProcessor"/>
 
-    <bean id = "quoterImpl" class = "org.example.bean.QuoterImpl" scope="prototype">
-        <property name = "message" value = "I'll be back"/>
-    </bean>
 
+
+    <bean id = "dataImpl" class = "org.example.bean.DataImpl" scope="prototype"/>
 </beans>

@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.bean.Data;
 import org.example.bean.Quoter;
 import org.example.bean.QuoterImpl;
 import org.springframework.beans.BeansException;
@@ -20,6 +21,9 @@ public class App {
 
         System.out.println("Before context load in main");
         ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
+
+        Data data = context.getBean(Data.class);
+        data.printData();
 
 //        while (true){
 //            Quoter obj = context.getBean(Quoter.class);
