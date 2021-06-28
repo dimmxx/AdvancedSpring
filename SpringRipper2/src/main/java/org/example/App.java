@@ -4,6 +4,7 @@ import org.example.bean.Quoter;
 import org.example.bean.QuoterImpl;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -13,9 +14,17 @@ import java.util.Objects;
 
 public class App {
 
+    private static ConfigurableApplicationContext context;
+
     public static void main(String[] args) {
 
-        ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
+       // ApplicationContext context =
+
+        context = new ClassPathXmlApplicationContext("context.xml");
+
+
+        context.start();
+
 
 //        while (true){
 //            Quoter obj = context.getBean(Quoter.class);
@@ -28,15 +37,15 @@ public class App {
 //        }
 
         Quoter obj = context.getBean(Quoter.class);
-        //obj.sayQuote();
+        obj.sayQuote();
 
-//        int i = 1;
-//        System.out.println("\nBeans in the Spring container:" );
-//        for(String beanName : context.getBeanDefinitionNames()){
-//            System.out.println(i + ". Bean: " + beanName);
-//            i++;
-//        }
-//        System.out.println("Total beans: " + i + "\n");
+        int i = 1;
+        System.out.println("\nBeans in the Spring container:" );
+        for(String beanName : context.getBeanDefinitionNames()){
+            System.out.println(i + ". Bean: " + beanName);
+            i++;
+        }
+        System.out.println("Total beans: " + i + "\n");
 
 //        Map<String, Object> map = context.getBeansOfType(Object.class);
 //        map.forEach((k, v) -> {

@@ -9,17 +9,13 @@
 <!--    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>-->
     <!--    name-space can be used instead-->
     <context:annotation-config/>
-<!--    or this name-space can be used instead to load annotation Post Processors:-->
+<!--    or this name-space can be used instead to load annotation Post Processors and other service beans:-->
 <!--    <context:component-scan base-package="org.example"/>-->
 
-    <bean id="postProxyInvokerListener" class="org.example.bpp.PostProxyInvokerListener"/>
+    <bean class="org.example.bpp.CustomApplicationContextListenerStartEvent"/>
 
-    <bean id="profilingHandlerBeanPostProcessor" class="org.example.bpp.ProfilingHandlerBeanPostProcessor"/>
+    <bean class="org.example.bpp.DeprecationHandlerBeanFactoryPostProcessor"/>
 
-    <bean id="randomIntBeanPostProcessor" class="org.example.bpp.InjectRandomIntBeanPostProcessor"/>
-
-    <bean id = "quoterImpl" class = "org.example.bean.QuoterImpl" scope="prototype">
-        <property name = "message" value = "I'll be back"/>
-    </bean>
+    <bean id="quoterImpl" class="org.example.bean.QuoterImpl" scope="prototype"/>
 
 </beans>
