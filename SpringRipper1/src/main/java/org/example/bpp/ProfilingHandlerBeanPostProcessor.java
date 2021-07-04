@@ -1,5 +1,6 @@
 package org.example.bpp;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.annotations.Profiling;
 import org.example.controller.ProfilingController;
 import org.springframework.beans.BeansException;
@@ -18,6 +19,7 @@ import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class ProfilingHandlerBeanPostProcessor implements BeanPostProcessor {
 
     private final Map<String, Class<?>> beanMap = new HashMap<>();
@@ -35,7 +37,7 @@ public class ProfilingHandlerBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-        System.out.println("=> Entered ProfilingHandlerBeanPostProcessor => postProcessBeforeInitialization: " + beanName);
+        log.info("Bean " + beanName + " enters method " + new Object(){}.getClass().getEnclosingMethod().getName());
         Class<?> clazz = bean.getClass();
         if (clazz.isAnnotationPresent(Profiling.class)) {
             beanMap.put(beanName, bean.getClass());
@@ -45,13 +47,14 @@ public class ProfilingHandlerBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        System.out.println("=> Entered ProfilingHandlerBeanPostProcessor => postProcessAfterInitialization: " + beanName);
+        log.info("Bean " + beanName + " enters method " + new Object(){}.getClass().getEnclosingMethod().getName());
         Class<?> beanClass = beanMap.get(beanName);
         if (beanClass != null) {
+            log.info("Before proxy creation for " + beanClass.getName());
             return Proxy.newProxyInstance(bean.getClass().getClassLoader(), bean.getClass().getInterfaces(), new InvocationHandler() {
                 @Override
                 public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                    if (profilingController.enabled) {
+                    if (profilingController.isEnabled()) {
                         System.out.println("\n:::Profiling...");
                         long before = System.nanoTime();
                         Object retVal = method.invoke(bean, args);

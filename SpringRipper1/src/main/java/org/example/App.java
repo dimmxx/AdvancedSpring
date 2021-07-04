@@ -1,29 +1,20 @@
 package org.example;
 
-import org.example.bean.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.example.bean.Quoter;
-import org.example.bean.QuoterImpl;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
-import org.springframework.beans.factory.config.BeanPostProcessor;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Arrays;
-import java.util.Map;
-import java.util.Objects;
 
+@Slf4j
 public class App {
 
     public static void main(String[] args) {
-
-        System.out.println("Before context load in main");
+        log.info("Before context load in main");
         ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
 
-        Data data = context.getBean(Data.class);
-        data.printData();
+        Arrays.stream(context.getBeanDefinitionNames()).forEach(b -> log.info("BEAN: " + b));
 
 //        while (true){
 //            Quoter obj = context.getBean(Quoter.class);
@@ -32,12 +23,13 @@ public class App {
 //                Thread.sleep(1000);
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
-//            }
+//
 //        }
 
-      System.out.println("before bean creation in Main");
-      Quoter obj = context.getBean(Quoter.class);
-        //obj.sayQuote();
+        log.info("----------------------------------- before bean creation ------------------------");
+        Quoter obj = context.getBean(Quoter.class);
+        log.info("----------------------------------- after bean creation -------------------------");
+        obj.sayQuote();
 
 //        int i = 1;
 //        System.out.println("\nBeans in the Spring container:" );
@@ -56,5 +48,6 @@ public class App {
 //            }
 //            System.out.println(k + " :" + v);
 //        });
+        log.info("EXIT");
     }
 }
