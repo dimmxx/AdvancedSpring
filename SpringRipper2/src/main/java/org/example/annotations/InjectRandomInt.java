@@ -6,7 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = ElementType.TYPE)
-public @interface DeprecatedClass {
-    Class newIpl();
+@Target(value = ElementType.FIELD)
+public @interface InjectRandomInt {
+    int min();
+    int max();
 }

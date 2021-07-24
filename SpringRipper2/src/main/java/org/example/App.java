@@ -1,30 +1,20 @@
 package org.example;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.bean.Quoter;
-import org.example.bean.QuoterImpl;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.Arrays;
-import java.util.Map;
-import java.util.Objects;
 
+@Slf4j
 public class App {
 
-    private static ConfigurableApplicationContext context;
-
     public static void main(String[] args) {
+        log.info("Before context load in main");
+        ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
 
-       // ApplicationContext context =
-
-        context = new ClassPathXmlApplicationContext("context.xml");
-
-
-        context.start();
-
+        Arrays.stream(context.getBeanDefinitionNames()).forEach(b -> log.info("BEAN: " + b));
 
 //        while (true){
 //            Quoter obj = context.getBean(Quoter.class);
@@ -33,19 +23,21 @@ public class App {
 //                Thread.sleep(1000);
 //            } catch (InterruptedException e) {
 //                e.printStackTrace();
-//            }
+//
 //        }
 
+        log.info("----------------------------------- before bean creation ------------------------");
         Quoter obj = context.getBean(Quoter.class);
+        log.info("----------------------------------- after bean creation -------------------------");
         obj.sayQuote();
 
-        int i = 1;
-        System.out.println("\nBeans in the Spring container:" );
-        for(String beanName : context.getBeanDefinitionNames()){
-            System.out.println(i + ". Bean: " + beanName);
-            i++;
-        }
-        System.out.println("Total beans: " + i + "\n");
+//        int i = 1;
+//        System.out.println("\nBeans in the Spring container:" );
+//        for(String beanName : context.getBeanDefinitionNames()){
+//            System.out.println(i + ". Bean: " + beanName);
+//            i++;
+//        }
+//        System.out.println("Total beans: " + i + "\n");
 
 //        Map<String, Object> map = context.getBeansOfType(Object.class);
 //        map.forEach((k, v) -> {
@@ -56,5 +48,6 @@ public class App {
 //            }
 //            System.out.println(k + " :" + v);
 //        });
+        log.info("EXIT");
     }
 }
