@@ -6,6 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(value = ElementType.METHOD)
-public @interface PostProxy {
+@Target(value = ElementType.TYPE)
+public @interface DeprecatedClass {
+    Class newImpl();
 }

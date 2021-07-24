@@ -1,12 +1,9 @@
 package org.example.bean;
 
+import org.example.annotations.DeprecatedClass;
 import org.example.annotations.InjectRandomInt;
-import org.example.annotations.PostProxy;
-import org.example.annotations.Profiling;
 
-import javax.annotation.PostConstruct;
-
-@Profiling
+@DeprecatedClass (newImpl = NewQuoterImpl.class)
 public class QuoterImpl implements Quoter {
 
     @InjectRandomInt(min = 1, max = 3)
@@ -15,17 +12,6 @@ public class QuoterImpl implements Quoter {
 
     public QuoterImpl() {
         System.out.println(">>>>> Phase1: repeat = " + repeat + " - срабатывает, когда Спринг создает бин с помощью рефлексии");
-    }
-
-    @PostConstruct
-    public void init() {
-        System.out.println(">>>>> Phase2: repeat = " + repeat +  " - срабатывает после создания бина и обработки методом BPP: postProcessBeforeInitialization. @PostConstruct работает с оригинальными бинами, не прокси!");
-    }
-
-    @PostProxy
-    @Override
-    public void runPostProxy(){
-        System.out.println(">>>>> Phase3: repeat = " + repeat +  " - срабатывает после обработки методом BPP: postProcessAfterInitialization. Работает с прокси!");
     }
 
     @Override
