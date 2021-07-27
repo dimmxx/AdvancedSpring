@@ -16,12 +16,12 @@ public class ConfigBestWay {
         return new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
     }
 
-@Bean
+    @Bean
     public ColorFrameBestWay colorFrameBestWay() {
         return new ColorFrameBestWay() {
             @Override
             protected Color getColor() {
-                return color();
+                return color(); //it is not method - it is application to the bean Color
             }
         };
     }

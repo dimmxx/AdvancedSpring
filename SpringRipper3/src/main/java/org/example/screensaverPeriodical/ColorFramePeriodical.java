@@ -1,4 +1,4 @@
-package org.example.screensaverBestWay;
+package org.example.screensaverPeriodical;
 
 import org.springframework.stereotype.Component;
 
@@ -7,9 +7,9 @@ import java.awt.*;
 import java.util.Random;
 
 @Component
-public abstract class ColorFrameBestWay extends JFrame {
+public abstract class ColorFramePeriodical extends JFrame {
 
-    public ColorFrameBestWay() {
+    public ColorFramePeriodical() {
         setSize(300, 300);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
